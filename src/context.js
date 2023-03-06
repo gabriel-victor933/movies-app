@@ -6,6 +6,7 @@ const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
 
     const [movies, setMovies] = useState([])
+    const [loading, setLoading] = useState(false)
 
     //get movies by genre and page
     const getMovies = async (genre = null, page = 1) => {
@@ -26,6 +27,7 @@ const AppProvider = ({ children }) => {
             }
         };
 
+        setLoading(true)
         try {
             const response = await axios.request(options)
 
@@ -34,7 +36,7 @@ const AppProvider = ({ children }) => {
         } catch (erro) {
             console.log(erro)
         }
-
+        setLoading(false)
     }
 
     const getGenres = async () => {
@@ -64,7 +66,7 @@ const AppProvider = ({ children }) => {
     const genres = getGenres()
 
     return (
-        <AppContext.Provider value={{ movies }}>
+        <AppContext.Provider value={{ movies, loading }}>
             {children}
         </AppContext.Provider>
     )

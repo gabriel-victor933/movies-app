@@ -2,8 +2,13 @@ import { useGlobalContext } from "./context";
 
 function App() {
 
-  const { movies } = useGlobalContext()
+  const { movies, loading } = useGlobalContext()
 
+  if (loading) {
+    return (
+      <h1>LOADING...</h1>
+    )
+  }
 
   return (
     <section>
